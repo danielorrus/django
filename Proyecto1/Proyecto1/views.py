@@ -5,11 +5,21 @@ from django.http import HttpResponse
 import datetime
 from django.template import Template, Context
 
+class Persona(object):
+    def __init__(self, nombre, apellido):
+        self.nombre = nombre
+        self.apellido = apellido
+
 def saludo(request):
+    nombre = "Juanillo"
+    apellido = "Pérecillo"
+    P1 = Persona(nombre, apellido)
+
+    ahora = datetime.datetime.now()
     doc_externo = open("/home/mint20/Documentos/Python/Django/Proyecto1/Proyecto1/plantillas/miplantilla.html")
     plt = Template(doc_externo.read())
     doc_externo.close()
-    ctx = Context()
+    ctx = Context({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora})
     documento = plt.render(ctx)
     return HttpResponse(documento)
 
