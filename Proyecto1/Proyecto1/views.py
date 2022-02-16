@@ -1,8 +1,16 @@
+from contextvars import Context
+from pipes import Template
+from pydoc import doc
 from django.http import HttpResponse
 import datetime
+from django.template import Template, Context
 
 def saludo(request):
-    documento = "<h1>que te den por culo</h1>"
+    doc_externo = open("/home/mint20/Documentos/Python/Django/Proyecto1/Proyecto1/plantillas/miplantilla.html")
+    plt = Template(doc_externo.read())
+    doc_externo.close()
+    ctx = Context()
+    documento = plt.render(ctx)
     return HttpResponse(documento)
 
 def despedida(request):
