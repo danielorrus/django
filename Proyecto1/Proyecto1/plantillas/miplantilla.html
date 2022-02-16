@@ -3,7 +3,19 @@
         <h1 style="color: red;">
             que te den por culo desde una plantilla
         </h1>
-        <p>vete a la mierda: {{nombre_persona}} {{apellido_persona}}</p>
+        <p>vete a la mierda: {{nombre_persona.upper}} {{apellido_persona.upper}}</p>
         <p>nos vamos a rascarla a día: {{momento_actual.day}}/{{momento_actual.month}}/{{momento_actual.year}}</p>
+        <p><strong>temas del curso:</strong></p>
+        <p>
+            <ul>
+                {% if temas %}
+                    {% for eltema in temas %}
+                        <li>{{eltema}}</li>
+                    {% endfor %}
+                {% else %}
+                    <p>no hay elementos que mostrar</p>
+                {% endif %}
+            </ul>
+        </p>
     </body>
 </html>

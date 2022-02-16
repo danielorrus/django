@@ -14,12 +14,13 @@ def saludo(request):
     nombre = "Juanillo"
     apellido = "Pérecillo"
     P1 = Persona(nombre, apellido)
+    temasdelcurso = ["plantillas", "modelos", "formularios", "vistas", "despliegue"]
 
     ahora = datetime.datetime.now()
     doc_externo = open("/home/mint20/Documentos/Python/Django/Proyecto1/Proyecto1/plantillas/miplantilla.html")
     plt = Template(doc_externo.read())
     doc_externo.close()
-    ctx = Context({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora})
+    ctx = Context({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
     documento = plt.render(ctx)
     return HttpResponse(documento)
 
