@@ -1,16 +1,29 @@
 <html>
     <body>
         <h1 style="color: red;">
-            que te den por culo desde una plantilla
+            que te den por culo desde una plantilla por primera vez
         </h1>
-        <p>vete a la mierda: {{nombre_persona.upper}} {{apellido_persona.upper}}</p>
+        
+        {# comentario aburrido #}
+        {% comment %}
+            comentario de varias líneas
+        {% endcomment %}
+
+        {% if nombre_persona == 'Juanillo' %}
+            <p>El curso lo imparte Juanillo</p>
+        {% else %}
+            <p>el curso lo imparte su madre</p>
+        {% endif %}
+
+
+        <p>vete a la mierda: {{nombre_persona|upper}} {{apellido_persona|lower}}</p>
         <p>nos vamos a rascarla a día: {{momento_actual.day}}/{{momento_actual.month}}/{{momento_actual.year}}</p>
         <p><strong>temas del curso:</strong></p>
         <p>
             <ul>
                 {% if temas %}
                     {% for eltema in temas %}
-                        <li>{{eltema}}</li>
+                        <li>{{eltema|first|upper}}</li>
                     {% endfor %}
                 {% else %}
                     <p>no hay elementos que mostrar</p>

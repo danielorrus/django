@@ -3,7 +3,8 @@ from pipes import Template
 from pydoc import doc
 from django.http import HttpResponse
 import datetime
-from django.template import Template, Context
+from django.template import Template, Context, loader
+
 
 class Persona(object):
     def __init__(self, nombre, apellido):
@@ -17,11 +18,14 @@ def saludo(request):
     temasdelcurso = ["plantillas", "modelos", "formularios", "vistas", "despliegue"]
 
     ahora = datetime.datetime.now()
-    doc_externo = open("/home/mint20/Documentos/Python/Django/Proyecto1/Proyecto1/plantillas/miplantilla.html")
-    plt = Template(doc_externo.read())
-    doc_externo.close()
-    ctx = Context({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
-    documento = plt.render(ctx)
+    
+    #doc_externo = open("/home/mint20/Documentos/Python/Django/Proyecto1/Proyecto1/plantillas/miplantilla.html")
+    #plt = Template(doc_externo.read())
+    #doc_externo.close()
+    doc_externo = loader.get_template('miplantilla.html') #la carpeta de las plantillas está indicada en el archivo settings.py
+
+    #ctx = Context({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
+    documento = doc_externo.render({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
     return HttpResponse(documento)
 
 def despedida(request):
