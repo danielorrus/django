@@ -4,6 +4,7 @@ from pydoc import doc
 from django.http import HttpResponse
 import datetime
 from django.template import Template, Context, loader
+from django.shortcuts import render
 
 
 class Persona(object):
@@ -19,14 +20,21 @@ def saludo(request):
 
     ahora = datetime.datetime.now()
     
+    # las que tienen una sola almohadilla son la primera versión
+    # las que tienen dos almohadillas son la segunda
+
+
     #doc_externo = open("/home/mint20/Documentos/Python/Django/Proyecto1/Proyecto1/plantillas/miplantilla.html")
     #plt = Template(doc_externo.read())
     #doc_externo.close()
-    doc_externo = loader.get_template('miplantilla.html') #la carpeta de las plantillas está indicada en el archivo settings.py
+    ##doc_externo = loader.get_template('miplantilla.html') #la carpeta de las plantillas está indicada en el archivo settings.py
 
     #ctx = Context({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
-    documento = doc_externo.render({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
-    return HttpResponse(documento)
+    ##documento = doc_externo.render({"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
+    ##return HttpResponse(documento)
+
+    # el render de abajo es django.shortcuts.render
+    return render(request, "miplantilla.html", {"nombre_persona": P1.nombre, "apellido_persona": P1.apellido, "momento_actual": ahora, "temas": temasdelcurso})
 
 def despedida(request):
     return HttpResponse("<h1>me cago en tu puta madre</h1>")
