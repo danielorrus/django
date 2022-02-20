@@ -54,3 +54,15 @@ def calculaEdad(request, edad, agno):
     edadFutura = edad + agno - 2022
     documento = "<html><body><h2>En el año %s tendrás %s años</h2></body></html>" %(agno, edadFutura)
     return HttpResponse(documento)
+
+
+def cursoc(request):
+    fecha_actual = datetime.datetime.now()
+
+    return render(request, "cursoc.html",{"dameFecha": fecha_actual})
+
+
+def cursocss(request):
+    fecha_actual = datetime.datetime.now()
+
+    return render(request, "cursocss.html",{"dameFecha": fecha_actual})
