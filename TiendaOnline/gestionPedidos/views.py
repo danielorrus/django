@@ -3,6 +3,7 @@ from django.shortcuts import render
 from gestionPedidos.models import Articulos
 from django.core.mail import send_mail
 from django.conf import settings
+from gestionPedidos.forms import FormularioContacto
 
 # Create your views here.
 
@@ -24,11 +25,25 @@ def buscar(request):
     return HttpResponse("<h1>" + mensaje + "</h1>")
 
 def contacto(request):
+    # version anterior a usar API Forms
+    # if request.method == "POST":
+    #     subject = request.POST["asunto"]
+    #     message = request.POST["mensaje"] + " " + request.POST["email"]
+    #     email_from = settings.EMAIL_HOST_USER
+    #     recipient_list = ["direccion@destino.com"]
+    #     send_mail(subject, message, email_from, recipient_list)
+    #     return render(request, "gracias.html")
+    # return render(request, "contacto.html")
+
+    # version de API Forms
     if request.method == "POST":
-        subject = request.POST["asunto"]
-        message = request.POST["mensaje"] + " " + request.POST["email"]
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = ["direccion@destino.com"]
-        send_mail(subject, message, email_from, recipient_list)
-        return render(request, "gracias.html")
-    return render(request, "contacto.html")
+        miFormulario = FormularioContacto(request.POST)
+        if miFormulario.is_valid():
+            infForm = miFormulario.cleaned_data
+            send_mail(infForm['asunto'], infForm['mensaje'], infForm.get('email',''), ['direccion@administrador.es'])
+            return render(request, "gracias.html")
+    else:
+        miFormulario = FormularioContacto() #esto es para que al cargar el formulario antes de meter los datos lo cargue vacío
+    
+    #ahora hay que mandarle construir el formulario en html (ya casi lo hace él sólo con print)
+    return render(request, "formulario_contacto.html", {"form": miFormulario})
