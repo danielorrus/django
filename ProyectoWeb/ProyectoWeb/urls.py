@@ -21,5 +21,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('servicios/', include("servicios.urls")),
     path('', include('ProyectoWebApp.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) #para registrar la url donde se guardan los archivos multimedia.
